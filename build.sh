@@ -1,7 +1,6 @@
   #!/bin/bash
 
 GRAALVMDIR=/opt/jvm/graalvm
-M2=$(realpath $HOME/.m2)
 PROJECT_DIR="`dirname \"$0\"`"
 
 $GRAALVMDIR/bin/native-image \

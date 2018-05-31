@@ -2,7 +2,9 @@ Basic test project which uses Vert.x Web to build a native image
 
 I'm using this project to check when it will be possible to generate a native image for Vert.x using GraalVM / Substrate VM.
 
-NOTE: May 2018: Building is currently failing due to missing support for netty.
+NOTE: May 2018 - Building is currently failing due to missing support for netty.
+
+Related issue: https://github.com/oracle/graal/issues/353
 
 ```
 Build on Server(pid: 6963, port: 26682)
