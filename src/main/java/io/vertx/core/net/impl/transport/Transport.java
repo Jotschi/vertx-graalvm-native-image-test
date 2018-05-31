@@ -53,10 +53,29 @@ public class Transport {
    * The native transport, it may be {@code null} or failed.
    */
   public static Transport nativeTransport() {
-    // Patched: I remove the native transport discovery. 
-    // The imports would be picked up by substrate 
-    // and cause further issues. 
-    return null;
+    Transport transport = null;
+    try {
+      Transport epoll = new EpollTransport();
+      if (epoll.isAvailable()) {
+        return epoll;
+      } else {
+        transport = epoll;
+      }
+    } catch (Throwable ignore) {
+      ignore.printStackTrace();
+      // Jar not here
+    }
+//    try {
+//      Transport kqueue = new KQueueTransport();
+//      if (kqueue.isAvailable()) {
+//        return kqueue;
+//      } else if (transport == null) {
+//        transport = kqueue;
+//      }
+//    } catch (Throwable ignore) {
+//      // Jar not here
+//    }
+    return transport;
   }
 
   Transport() {

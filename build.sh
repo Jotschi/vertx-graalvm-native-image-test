@@ -2,20 +2,24 @@
 
 GRAALVMDIR=/opt/jvm/graalvm
 PROJECT_DIR="`dirname \"$0\"`"
+LIBPATH=$PROJECT_DIR/clibraries/linux-amd64
 
 cd $PROJECT_DIR
-
 mvn clean package
-
 rm vertx-graal*
+ #-Dio.netty.native.workdir=$LIBPATH \
+ #-H:CLibraryPath=$LIBPATH \
+
+echo "LIB PATH:" $LIBPATH
 $GRAALVMDIR/bin/native-image \
  --verbose \
  --no-server \
+ -H:+JNI \
+ -Djava.library.path=$LIBPATH \
+ -H:JNIConfigurationFiles=./graalvm/jni-netty.json \
  -Dio.netty.noUnsafe=true  \
  -H:Name=hello-world \
- -H:ReflectionConfigurationFiles=./reflectconfigs/netty \
+ -H:ReflectionConfigurationFiles=./graalvm/reflection-netty.json \
  -H:+ReportUnsupportedElementsAtRuntime \
  -Dfile.encoding=UTF-8 \
  -jar target/vertx-graalvm-native-image-test-0.0.1-SNAPSHOT.jar
- 
-
