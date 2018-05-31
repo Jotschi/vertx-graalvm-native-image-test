@@ -36,6 +36,7 @@ public class ReflectiveChannelFactory<T extends Channel> implements ChannelFacto
 	@Override
 	public T newChannel() {
 		try {
+			// Somehow instantiation via reflection did not work here and I had to patch the line. 
 			return (T) new NioServerSocketChannel();
 		} catch (Throwable t) {
 			throw new ChannelException("Unable to create Channel from class " + clazz, t);

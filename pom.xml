@@ -29,6 +29,10 @@
 			<artifactId>log4j-over-slf4j</artifactId>
 			<version>1.7.25</version>
 		</dependency>
+		<!--
+		Add tcnative to avoid error during native image generation:
+		Caused by: java.lang.NoClassDefFoundError: io/netty/handler/ssl/ReferenceCountedOpenSslServerContext$OpenSslSniHostnameMatcher
+		 -->
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-tcnative</artifactId>

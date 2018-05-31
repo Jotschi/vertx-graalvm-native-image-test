@@ -53,6 +53,9 @@ public class Transport {
    * The native transport, it may be {@code null} or failed.
    */
   public static Transport nativeTransport() {
+    // Patched: I remove the native transport discovery. 
+    // The imports would be picked up by substrate 
+    // and cause further issues. 
     return null;
   }
 
