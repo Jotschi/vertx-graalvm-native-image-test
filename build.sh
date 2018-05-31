@@ -7,12 +7,13 @@ cd $PROJECT_DIR
 
 mvn clean package
 
-rm vertx-graalvm-native-image-test-0.0.1-SNAPSHOT 
+rm vertx-graal*
 $GRAALVMDIR/bin/native-image \
  --verbose \
  --no-server \
- -H:ReflectionConfigurationFiles=./reflectconfigs/netty \
  -Dio.netty.noUnsafe=true  \
+ -H:Name=hello-world \
+ -H:ReflectionConfigurationFiles=./reflectconfigs/netty \
  -H:+ReportUnsupportedElementsAtRuntime \
  -Dfile.encoding=UTF-8 \
  -jar target/vertx-graalvm-native-image-test-0.0.1-SNAPSHOT.jar
