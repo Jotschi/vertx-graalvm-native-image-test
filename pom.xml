@@ -29,6 +29,34 @@
 					<release>8</release>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>de.jotschi.examples.Runner</mainClass>
+								</transformer>
+							</transformers>
+							<filters>
+								<filter>
+									<artifact>io.vertx:vertx-core</artifact>
+									<excludes>
+										<exclude>io/vertx/core/net/impl/transport/EpollTransport.class</exclude>
+									</excludes>
+								</filter>
+							</filters>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>
