@@ -5,6 +5,7 @@ import java.io.File;
 import io.netty.buffer.AbstractByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.epoll.Epoll;
+import io.netty.channel.epoll.Native;
 import io.netty.channel.nio.NioEventLoop;
 import io.netty.handler.ssl.OpenSsl;
 import io.netty.resolver.dns.DefaultDnsServerAddressStreamProvider;
@@ -43,6 +44,8 @@ public class Runner {
 	}
 
 	private static void setupNetty() {
+		Native.init();
+		Native.init2();
 		ResourceLeakDetectorFactory.init();
 		AbstractByteBuf.init();
 		ThreadDeathWatcher.init();
