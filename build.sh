@@ -7,8 +7,6 @@ LIBPATH=$PROJECT_DIR/clibraries/linux-amd64
 cd $PROJECT_DIR
 mvn clean package
 rm vertx-graal*
- #-Dio.netty.native.workdir=$LIBPATH \
- #-H:CLibraryPath=$LIBPATH \
 
 echo "LIB PATH:" $LIBPATH
 $GRAALVMDIR/bin/native-image \
@@ -16,6 +14,8 @@ $GRAALVMDIR/bin/native-image \
  --no-server \
  -H:+JNI \
  -Djava.library.path=$LIBPATH \
+ -Dio.netty.native.workdir=$LIBPATH \
+ -H:CLibraryPath=$LIBPATH \
  -H:JNIConfigurationFiles=./graalvm/jni-netty.json \
  -Dio.netty.noUnsafe=true  \
  -H:Name=hello-world \

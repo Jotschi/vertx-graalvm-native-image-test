@@ -2,7 +2,14 @@ package de.jotschi.examples;
 
 import java.io.File;
 
+import io.netty.buffer.AbstractByteBuf;
+import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.epoll.Epoll;
+import io.netty.channel.nio.NioEventLoop;
+import io.netty.handler.ssl.OpenSsl;
+import io.netty.resolver.dns.DefaultDnsServerAddressStreamProvider;
+import io.netty.util.ResourceLeakDetectorFactory;
+import io.netty.util.ThreadDeathWatcher;
 import io.vertx.core.Vertx;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
@@ -12,6 +19,8 @@ import io.vertx.ext.web.Router;
 public class Runner {
 
 	public static void main(String[] args) {
+		setupNetty();
+
 		System.out.println(Epoll.isAvailable());
 		// System.loadLibrary("netty_transport_native_epoll_x86_64");
 		File logbackFile = new File("config", "logback.xml");
@@ -31,6 +40,18 @@ public class Runner {
 			.requestHandler(router::accept)
 			.listen(8080);
 
+	}
+
+	private static void setupNetty() {
+		ResourceLeakDetectorFactory.init();
+		AbstractByteBuf.init();
+		ThreadDeathWatcher.init();
+		OpenSsl.init();
+		ByteBufUtil.init();
+		Epoll.init();
+		Epoll.ensureAvailability();
+		NioEventLoop.init();
+		DefaultDnsServerAddressStreamProvider.init();
 	}
 
 }
