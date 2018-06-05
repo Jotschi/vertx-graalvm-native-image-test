@@ -2,9 +2,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.jotschi</groupId>
+	<groupId>de.jotschi.vertx</groupId>
 	<artifactId>vertx-graalvm-native-image-test</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
 	<properties>
 		<vertx.version>3.5.1</vertx.version>
@@ -12,38 +13,10 @@
 		<os.arch>x86_64</os.arch>
 	</properties>
 
-
-	<dependencies>
-		<dependency>
-			<groupId>io.vertx</groupId>
-			<artifactId>vertx-web</artifactId>
-			<version>${vertx.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>1.1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>log4j-over-slf4j</artifactId>
-			<version>1.7.25</version>
-		</dependency>
-		<!--
-		Add tcnative to avoid error during native image generation:
-		Caused by: java.lang.NoClassDefFoundError: io/netty/handler/ssl/ReferenceCountedOpenSslServerContext$OpenSslSniHostnameMatcher
-		 -->
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-tcnative</artifactId>
-			<version>2.0.8.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>com.jcraft</groupId>
-			<artifactId>jzlib</artifactId>
-			<version>1.1.3</version>
-		</dependency>
-	</dependencies>
+	<modules>
+		<module>patches</module>
+		<module>app</module>
+	</modules>
 
 	<build>
 		<plugins>
@@ -52,30 +25,31 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.7.0</version>
 				<configuration>
-					<release>8</release>
+					<release>10</release>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.1.1</version>
+				<artifactId>maven-toolchains-plugin</artifactId>
+				<version>1.1</version>
 				<executions>
 					<execution>
-						<phase>package</phase>
+						<?m2e ignore ?>
 						<goals>
-							<goal>shade</goal>
+							<goal>toolchain</goal>
 						</goals>
-						<configuration>
-							<transformers>
-								<transformer
-									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>de.jotschi.examples.Runner</mainClass>
-								</transformer>
-							</transformers>
-						</configuration>
 					</execution>
 				</executions>
+				<configuration>
+					<toolchains>
+						<jdk>
+							<version>10</version>
+							<vendor>oracle</vendor>
+						</jdk>
+					</toolchains>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+
 </project>
