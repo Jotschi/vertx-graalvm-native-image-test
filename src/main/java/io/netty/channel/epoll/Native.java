@@ -31,6 +31,8 @@ import java.net.InetAddress;
 import java.nio.channels.ClosedChannelException;
 import java.util.Locale;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+
 import static io.netty.channel.epoll.NativeStaticallyReferencedJniMethods.epollerr;
 import static io.netty.channel.epoll.NativeStaticallyReferencedJniMethods.epollet;
 import static io.netty.channel.epoll.NativeStaticallyReferencedJniMethods.epollin;
@@ -55,6 +57,19 @@ import static io.netty.channel.unix.Errors.newIOException;
 public final class Native {
     private static final InternalLogger logger = InternalLoggerFactory.getInstance(Native.class);
 
+    // EventLoop operations and constants
+    public static int EPOLLIN;
+    public static int EPOLLOUT;
+    public static int EPOLLRDHUP;
+    public static int EPOLLET;
+    public static int EPOLLERR;
+    
+    public static boolean IS_SUPPORTING_SENDMMSG;
+    public static boolean IS_SUPPORTING_TCP_FASTOPEN;
+    public static int TCP_MD5SIG_MAXKEYLEN;
+    public static String KERNEL_VERSION;
+
+    
     public static void init2() {
         try {
             // First, try calling a side-effect free JNI method to see if the library was already
@@ -64,19 +79,18 @@ public final class Native {
             // The library was not previously loaded, load it now.
             loadNativeLibrary();
         }
+
+        EPOLLIN = epollin();
+        EPOLLOUT = epollout();
+        EPOLLRDHUP = epollrdhup();
+        EPOLLET = epollet();
+        EPOLLERR = epollerr();
+
+        IS_SUPPORTING_SENDMMSG = isSupportingSendmmsg();
+        IS_SUPPORTING_TCP_FASTOPEN = isSupportingTcpFastopen();
+        TCP_MD5SIG_MAXKEYLEN = tcpMd5SigMaxKeyLen();
+        KERNEL_VERSION = kernelVersion();
     }
-
-    // EventLoop operations and constants
-    public static final int EPOLLIN = epollin();
-    public static final int EPOLLOUT = epollout();
-    public static final int EPOLLRDHUP = epollrdhup();
-    public static final int EPOLLET = epollet();
-    public static final int EPOLLERR = epollerr();
-
-    public static final boolean IS_SUPPORTING_SENDMMSG = isSupportingSendmmsg();
-    public static final boolean IS_SUPPORTING_TCP_FASTOPEN = isSupportingTcpFastopen();
-    public static final int TCP_MD5SIG_MAXKEYLEN = tcpMd5SigMaxKeyLen();
-    public static final String KERNEL_VERSION = kernelVersion();
 
     private static NativeIoException SENDFILE_CONNECTION_RESET_EXCEPTION;
     private static NativeIoException SENDMMSG_CONNECTION_RESET_EXCEPTION;
@@ -112,7 +126,8 @@ public final class Native {
     static native void timerFdRead(int fd);
 
     public static FileDescriptor newEpollCreate() {
-        return new FileDescriptor(epollCreate());
+        int fd = epollCreate();
+        return new FileDescriptor(fd);
     }
 
     private static native int epollCreate();

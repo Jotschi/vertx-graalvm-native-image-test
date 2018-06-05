@@ -22,8 +22,6 @@ public class Runner {
 	public static void main(String[] args) {
 		setupNetty();
 
-		System.out.println(Epoll.isAvailable());
-		// System.loadLibrary("netty_transport_native_epoll_x86_64");
 		File logbackFile = new File("config", "logback.xml");
 		System.setProperty("logback.configurationFile", logbackFile.getAbsolutePath());
 		System.setProperty(LoggerFactory.LOGGER_DELEGATE_FACTORY_CLASS_NAME, SLF4JLogDelegateFactory.class.getName());
@@ -44,15 +42,16 @@ public class Runner {
 	}
 
 	private static void setupNetty() {
-		Native.init();
 		Native.init2();
+		Native.init();
+
+		Epoll.ensureAvailability();
+		Epoll.init();
 		ResourceLeakDetectorFactory.init();
 		AbstractByteBuf.init();
 		ThreadDeathWatcher.init();
 		OpenSsl.init();
 		ByteBufUtil.init();
-		Epoll.init();
-		Epoll.ensureAvailability();
 		NioEventLoop.init();
 		DefaultDnsServerAddressStreamProvider.init();
 	}
