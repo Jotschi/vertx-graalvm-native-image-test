@@ -4,13 +4,19 @@ import java.io.File;
 
 import io.netty.buffer.AbstractByteBuf;
 import io.netty.buffer.ByteBufUtil;
+import io.netty.buffer.PooledByteBufAllocator;
+import io.netty.channel.MultithreadEventLoopGroup;
 import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.Native;
 import io.netty.channel.nio.NioEventLoop;
 import io.netty.handler.ssl.OpenSsl;
 import io.netty.resolver.dns.DefaultDnsServerAddressStreamProvider;
+import io.netty.util.NetUtil;
 import io.netty.util.ResourceLeakDetectorFactory;
 import io.netty.util.ThreadDeathWatcher;
+import io.netty.util.internal.InternalThreadLocalMap;
+import io.netty.util.internal.NativeLibraryLoader;
+import io.netty.util.internal.PlatformDependent;
 import io.vertx.core.Vertx;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
@@ -42,9 +48,14 @@ public class Runner {
 	}
 
 	private static void setupNetty() {
+		PlatformDependent.init();
+		NativeLibraryLoader.init();
 		Native.init2();
 		Native.init();
-
+		NetUtil.init();
+		InternalThreadLocalMap.init();
+		MultithreadEventLoopGroup.init();
+		PooledByteBufAllocator.init();
 		Epoll.ensureAvailability();
 		Epoll.init();
 		ResourceLeakDetectorFactory.init();
