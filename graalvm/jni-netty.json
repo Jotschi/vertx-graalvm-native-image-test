@@ -1,5 +1,19 @@
 [
   {
+    "name": "io.netty.channel.unix.FileDescriptor",
+    "methods": [
+      { "name": "open", "parameterTypes": ["java.lang.String"] },
+      { "name": "close", "parameterTypes": ["int"] },
+      { "name": "write", "parameterTypes": ["int", "java.nio.ByteBuffer", "int", "int"] },
+      { "name": "writeAddress", "parameterTypes": ["int", "long", "int", "int"] },
+      { "name": "writev", "parameterTypes": ["int", "java.nio.ByteBuffer[]", "int", "int", "long"] },
+      { "name": "writevAddresses", "parameterTypes": ["int", "long", "int"] },
+      { "name": "read", "parameterTypes": ["int", "java.nio.ByteBuffer", "int", "int"] },
+      { "name": "readAddress", "parameterTypes": ["int", "long", "int", "int"] },
+      { "name": "newPipe" }
+    ]
+  },
+  {
     "name": "io.netty.channel.epoll.Native",
     "methods": [
       { "name": "eventFd" },
