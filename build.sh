@@ -4,7 +4,7 @@ GRAALVMDIR=/opt/jvm/graalvm
 PROJECT_DIR="`dirname \"$0\"`"
 
 cd $PROJECT_DIR
-mvn clean package
+./mvnw clean package
 
 rm vertx-graal*
 $GRAALVMDIR/bin/native-image \
