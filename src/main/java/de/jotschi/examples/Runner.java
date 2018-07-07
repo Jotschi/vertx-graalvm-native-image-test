@@ -5,7 +5,6 @@ import java.io.File;
 import io.netty.buffer.AbstractByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.PooledByteBufAllocator;
-import io.netty.channel.MultithreadEventLoopGroup;
 import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.Native;
 import io.netty.channel.nio.NioEventLoop;
@@ -14,7 +13,6 @@ import io.netty.handler.ssl.OpenSsl;
 import io.netty.resolver.dns.DefaultDnsServerAddressStreamProvider;
 import io.netty.util.Recycler;
 import io.netty.util.ResourceLeakDetectorFactory;
-import io.netty.util.ThreadDeathWatcher;
 import io.netty.util.internal.InternalThreadLocalMap;
 import io.netty.util.internal.NativeLibraryLoader;
 import io.netty.util.internal.PlatformDependent;
@@ -82,7 +80,6 @@ public class Runner {
 		//NetUtil2.init();
 		InternalThreadLocalMap.init();
 		// Sets eventloop thread count
-		MultithreadEventLoopGroup.init();
 		NioServerSocketChannel.init();
 
 		log.info("Setup SSL");
