@@ -7,6 +7,7 @@ import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.Native;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.util.internal.CleanerJava6;
 import io.netty.util.internal.NativeLibraryLoader;
 import io.netty.util.internal.PlatformDependent;
 import io.vertx.core.Vertx;
@@ -51,11 +52,7 @@ public class Runner {
 
 		log.info("Init buffer utils");
 		ByteBufUtil.init();
-		{
-			log.info("PooledByteBufAllocator");
-			PooledByteBufAllocator.init();
-			log.info("AbstractByteBuf");
-		}
+		PooledByteBufAllocator.init();
 		Native.init2();
 		setupNetty();
 	}
@@ -69,6 +66,7 @@ public class Runner {
 		Native.init();
 		// Sets eventloop thread count
 		NioServerSocketChannel.init();
+		CleanerJava6.init();
 	}
 
 }

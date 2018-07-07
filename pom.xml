@@ -8,6 +8,7 @@
 
 	<properties>
 		<vertx.version>3.6.0-SNAPSHOT</vertx.version>
+		<main.class>de.jotschi.examples.Runner</main.class>
 	</properties>
 
 
@@ -83,7 +84,7 @@
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>de.jotschi.examples.Runner</mainClass>
+									<mainClass>${main.class}</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>

@@ -16,7 +16,6 @@
 package io.netty.channel.epoll;
 
 import io.netty.channel.unix.FileDescriptor;
-import io.netty.util.internal.PlatformDependent;
 
 /**
  * Tells if <a href="http://netty.io/wiki/native-transports.html">{@code netty-transport-native-epoll}</a> is supported.
