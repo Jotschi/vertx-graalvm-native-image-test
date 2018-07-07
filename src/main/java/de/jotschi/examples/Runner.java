@@ -12,7 +12,6 @@ import io.netty.channel.nio.NioEventLoop;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.ssl.OpenSsl;
 import io.netty.resolver.dns.DefaultDnsServerAddressStreamProvider;
-import io.netty.util.NetUtil;
 import io.netty.util.Recycler;
 import io.netty.util.ResourceLeakDetectorFactory;
 import io.netty.util.ThreadDeathWatcher;
@@ -80,13 +79,12 @@ public class Runner {
 
 		log.info("Setup Netty");
 		Native.init();
-		NetUtil.init();
+		//NetUtil2.init();
 		InternalThreadLocalMap.init();
 		// Sets eventloop thread count
 		MultithreadEventLoopGroup.init();
 		NioServerSocketChannel.init();
 
-		ThreadDeathWatcher.init();
 		log.info("Setup SSL");
 		OpenSsl.init();
 		NioEventLoop.init();

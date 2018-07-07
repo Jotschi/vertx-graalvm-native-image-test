@@ -15,16 +15,8 @@
  */
 package io.netty.resolver.dns;
 
-import io.netty.util.NetUtil;
-import io.netty.util.internal.SocketUtils;
-import io.netty.util.internal.UnstableApi;
-import io.netty.util.internal.logging.InternalLogger;
-import io.netty.util.internal.logging.InternalLoggerFactory;
+import static io.netty.resolver.dns.DnsServerAddresses.sequential;
 
-import javax.naming.Context;
-import javax.naming.NamingException;
-import javax.naming.directory.DirContext;
-import javax.naming.directory.InitialDirContext;
 import java.lang.reflect.Method;
 import java.net.Inet6Address;
 import java.net.InetSocketAddress;
@@ -35,7 +27,16 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
-import static io.netty.resolver.dns.DnsServerAddresses.sequential;
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.naming.directory.DirContext;
+import javax.naming.directory.InitialDirContext;
+
+import io.netty.util.NetUtil;
+import io.netty.util.internal.SocketUtils;
+import io.netty.util.internal.UnstableApi;
+import io.netty.util.internal.logging.InternalLogger;
+import io.netty.util.internal.logging.InternalLoggerFactory;
 
 /**
  * A {@link DnsServerAddressStreamProvider} which will use predefined default DNS servers to use for DNS resolution.

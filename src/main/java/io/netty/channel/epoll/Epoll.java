@@ -33,6 +33,7 @@ public final class Epoll {
             epollFd = Native.newEpollCreate();
             eventFd = Native.newEventFd();
         } catch (Throwable t) {
+            t.printStackTrace();
             cause = t;
         } finally {
             if (epollFd != null) {
