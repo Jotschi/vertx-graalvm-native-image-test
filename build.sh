@@ -17,9 +17,8 @@ $GRAALVMDIR/bin/native-image \
  -Dio.netty.native.workdir=$LIBPATH \
  -H:CLibraryPath=$LIBPATH \
  -H:JNIConfigurationFiles=./graalvm/jni-netty.json \
- -Dio.netty.noUnsafe=true  \
  -H:Name=hello-world \
- -H:ReflectionConfigurationFiles=./graalvm/reflection-netty.json \
  -H:+ReportUnsupportedElementsAtRuntime \
+ -H:ReflectionConfigurationFiles=./graalvm/reflection-netty.json \
  -Dfile.encoding=UTF-8 \
  -jar target/vertx-graalvm-native-image-test-0.0.1-SNAPSHOT.jar

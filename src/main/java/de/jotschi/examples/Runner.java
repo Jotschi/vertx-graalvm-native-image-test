@@ -88,7 +88,7 @@ public class Runner {
 
 		ThreadDeathWatcher.init();
 		log.info("Setup SSL");
-//		OpenSsl.init();
+		OpenSsl.init();
 		NioEventLoop.init();
 		DefaultDnsServerAddressStreamProvider.init();
 		

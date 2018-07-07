@@ -249,7 +249,7 @@ public final class PlatformDependent {
      * direct memory access.
      */
     public static boolean hasUnsafe() {
-        return HAS_UNSAFE;
+        return false;
     }
 
     /**
