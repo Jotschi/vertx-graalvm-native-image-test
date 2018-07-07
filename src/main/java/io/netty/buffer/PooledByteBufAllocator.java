@@ -137,10 +137,11 @@ public class PooledByteBufAllocator extends AbstractByteBufAllocator implements 
             logger.debug("-Dio.netty.allocator.cacheTrimInterval: {}", DEFAULT_CACHE_TRIM_INTERVAL);
             logger.debug("-Dio.netty.allocator.useCacheForAllThreads: {}", DEFAULT_USE_CACHE_FOR_ALL_THREADS);
         }
+        
+        DEFAULT = new PooledByteBufAllocator(PlatformDependent.directBufferPreferred());
     }
 
-    public static final PooledByteBufAllocator DEFAULT =
-            new PooledByteBufAllocator(PlatformDependent.directBufferPreferred());
+    public static PooledByteBufAllocator DEFAULT;
 
     private final PoolArena<byte[]>[] heapArenas;
     private final PoolArena<ByteBuffer>[] directArenas;

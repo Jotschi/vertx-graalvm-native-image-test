@@ -9,6 +9,7 @@ import io.netty.channel.MultithreadEventLoopGroup;
 import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.Native;
 import io.netty.channel.nio.NioEventLoop;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.ssl.OpenSsl;
 import io.netty.resolver.dns.DefaultDnsServerAddressStreamProvider;
 import io.netty.util.NetUtil;
@@ -21,7 +22,6 @@ import io.vertx.core.Vertx;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.core.logging.SLF4JLogDelegateFactory;
-import io.vertx.core.net.impl.PartialPooledByteBufAllocator;
 import io.vertx.ext.web.Router;
 
 public class Runner {
@@ -33,10 +33,11 @@ public class Runner {
 		System.setProperty(LoggerFactory.LOGGER_DELEGATE_FACTORY_CLASS_NAME, SLF4JLogDelegateFactory.class.getName());
 		log = LoggerFactory.getLogger(Runner.class);
 		log.info("Setup Netty");
-		setupNetty();
+		setupNettyJNI();
 	}
 
 	public static void main(String[] args) {
+		// setupNetty();
 		log.info("Starting server for: http://localhost:8080/hello");
 		Vertx vertx = Vertx.vertx();
 		Router router = Router.router(vertx);
@@ -51,28 +52,43 @@ public class Runner {
 
 	}
 
-	private static void setupNetty() {
-		System.out.println("Init:");
+	private static void setupNettyJNI() {
 		NativeLibraryLoader.init();
-		System.out.println("Init2:");
-		Native.init2();
-		System.out.println("Platform.init:");
+
+		log.info("Init platform");
 		PlatformDependent.init();
+
+		log.info("Init buffer utils");
+		ByteBufUtil.init();
+		{
+			ResourceLeakDetectorFactory.init();
+			log.info("PooledByteBufAllocator");
+			PooledByteBufAllocator.init();
+			log.info("AbstractByteBuf");
+			AbstractByteBuf.init();
+		}
+		Native.init2();
+		NioServerSocketChannel.init();
+		setupNetty();
+	}
+
+	private static void setupNetty() {
+		log.info("Setup Netty");
 		Native.init();
 		NetUtil.init();
 		InternalThreadLocalMap.init();
 		MultithreadEventLoopGroup.init();
-		PooledByteBufAllocator.init();
+		log.info("Setup EPOLL");
 		Epoll.ensureAvailability();
 		Epoll.init();
-		ResourceLeakDetectorFactory.init();
-		//AbstractByteBuf.init();
+		
+
 		ThreadDeathWatcher.init();
+		log.info("Setup SSL");
 		OpenSsl.init();
-//		ByteBufUtil.init();
 		NioEventLoop.init();
-		//DefaultDnsServerAddressStreamProvider.init();
-		System.out.println(PartialPooledByteBufAllocator.INSTANCE); 
+		DefaultDnsServerAddressStreamProvider.init();
+
 	}
 
 }

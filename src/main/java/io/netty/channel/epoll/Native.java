@@ -75,9 +75,7 @@ public final class Native {
             // First, try calling a side-effect free JNI method to see if the library was already
             // loaded by the application.
             offsetofEpollData();
-            System.out.println("Already loaded..");
         } catch (UnsatisfiedLinkError ignore) {
-        	System.out.println("Not loaded..");
             // The library was not previously loaded, load it now.
             loadNativeLibrary();
         }
@@ -221,7 +219,6 @@ public final class Native {
         String sharedLibName = staticLibName + '_' + PlatformDependent.normalizedArch();
         ClassLoader cl = PlatformDependent.getClassLoader(Native.class);
         try {
-        	System.out.println("Loading: " + sharedLibName);
             NativeLibraryLoader.load(sharedLibName, cl);
         } catch (UnsatisfiedLinkError e1) {
             try {
