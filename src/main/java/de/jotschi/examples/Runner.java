@@ -10,6 +10,8 @@ import io.vertx.ext.web.Router;
 
 public class Runner {
 
+
+
 	public static void main(String[] args) {
 		// Use logback for logging
 		File logbackFile = new File("config", "logback.xml");
@@ -28,7 +30,7 @@ public class Runner {
 		});
 
 		vertx.createHttpServer()
-			.requestHandler(router::accept)
+			.requestHandler(router::handle)
 			.listen(8080);
 
 	}
