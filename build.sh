@@ -1,6 +1,6 @@
   #!/bin/bash
 
-GRAALVMDIR=/opt/jvm/graalvm
+GRAALVMDIR=/opt/jvm/graalvm-ee
 PROJECT_DIR="`dirname \"$0\"`"
 LIBPATH=$PROJECT_DIR/clibraries/linux-amd64
 

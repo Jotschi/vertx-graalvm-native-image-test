@@ -34,15 +34,12 @@ public abstract class MultithreadEventLoopGroup extends MultithreadEventExecutor
 
     private static final InternalLogger logger = InternalLoggerFactory.getInstance(MultithreadEventLoopGroup.class);
 
-    private static int DEFAULT_EVENT_LOOP_THREADS;
+    private static int DEFAULT_EVENT_LOOP_THREADS = 16;
 
     public static void init() {
         DEFAULT_EVENT_LOOP_THREADS = Math.max(1, SystemPropertyUtil.getInt(
                 "io.netty.eventLoopThreads", NettyRuntime.availableProcessors() * 2));
-
-        if (logger.isDebugEnabled()) {
-            logger.debug("-Dio.netty.eventLoopThreads: {}", DEFAULT_EVENT_LOOP_THREADS);
-        }
+       logger.info("-Dio.netty.eventLoopThreads: {}", DEFAULT_EVENT_LOOP_THREADS);
     }
 
     /**
