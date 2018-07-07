@@ -2,18 +2,11 @@ package de.jotschi.examples;
 
 import java.io.File;
 
-import io.netty.buffer.AbstractByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.Native;
-import io.netty.channel.nio.NioEventLoop;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.ssl.OpenSsl;
-import io.netty.resolver.dns.DefaultDnsServerAddressStreamProvider;
-import io.netty.util.Recycler;
-import io.netty.util.ResourceLeakDetectorFactory;
-import io.netty.util.internal.InternalThreadLocalMap;
 import io.netty.util.internal.NativeLibraryLoader;
 import io.netty.util.internal.PlatformDependent;
 import io.vertx.core.Vertx;
@@ -32,7 +25,6 @@ public class Runner {
 		log = LoggerFactory.getLogger(Runner.class);
 		log.info("Setup Netty");
 		setupNettyJNI();
-		Recycler.init();
 	}
 
 	public static void main(String[] args) {
@@ -60,11 +52,9 @@ public class Runner {
 		log.info("Init buffer utils");
 		ByteBufUtil.init();
 		{
-			ResourceLeakDetectorFactory.init();
 			log.info("PooledByteBufAllocator");
 			PooledByteBufAllocator.init();
 			log.info("AbstractByteBuf");
-			AbstractByteBuf.init();
 		}
 		Native.init2();
 		setupNetty();
@@ -77,15 +67,8 @@ public class Runner {
 
 		log.info("Setup Netty");
 		Native.init();
-		//NetUtil2.init();
-		InternalThreadLocalMap.init();
 		// Sets eventloop thread count
 		NioServerSocketChannel.init();
-
-		log.info("Setup SSL");
-		OpenSsl.init();
-		
-
 	}
 
 }
