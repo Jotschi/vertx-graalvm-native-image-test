@@ -84,8 +84,6 @@ public class Runner {
 
 		log.info("Setup SSL");
 		OpenSsl.init();
-		NioEventLoop.init();
-		DefaultDnsServerAddressStreamProvider.init();
 		
 
 	}
