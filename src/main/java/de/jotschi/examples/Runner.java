@@ -49,7 +49,7 @@ public class Runner {
 		});
 
 		vertx.createHttpServer()
-			.requestHandler(router::accept)
+			.requestHandler(router::handle)
 			.listen(8080);
 
 	}
