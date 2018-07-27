@@ -1,7 +1,5 @@
 package de.jotschi.examples;
 
-import java.io.File;
-
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.epoll.Epoll;
@@ -11,27 +9,31 @@ import io.netty.util.internal.CleanerJava6;
 import io.netty.util.internal.NativeLibraryLoader;
 import io.netty.util.internal.PlatformDependent;
 import io.vertx.core.Vertx;
+import io.vertx.core.VertxOptions;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
-import io.vertx.core.logging.SLF4JLogDelegateFactory;
 import io.vertx.ext.web.Router;
 
 public class Runner {
 
 	private static Logger log;
 	static {
-		File logbackFile = new File("config", "logback.xml");
-		System.setProperty("logback.configurationFile", logbackFile.getAbsolutePath());
-		System.setProperty(LoggerFactory.LOGGER_DELEGATE_FACTORY_CLASS_NAME, SLF4JLogDelegateFactory.class.getName());
-		log = LoggerFactory.getLogger(Runner.class);
+		setupLogger();
 		log.info("Setup Netty");
 		setupNettyJNI();
 	}
 
 	public static void main(String[] args) {
+		setupLogger();
+		// Load the statically linked lib
+		// String staticLibName = "netty_transport_native_epoll";
+		// System.loadLibrary(staticLibName);
+
 		// setupNetty();
 		log.info("Starting server for: http://localhost:8080/hello");
-		Vertx vertx = Vertx.vertx();
+		VertxOptions options = new VertxOptions();
+		options.setPreferNativeTransport(true);
+		Vertx vertx = Vertx.vertx(options);
 		Router router = Router.router(vertx);
 
 		router.route("/hello").handler(rc -> {
@@ -42,6 +44,13 @@ public class Runner {
 			.requestHandler(router::handle)
 			.listen(8080);
 
+	}
+
+	private static void setupLogger() {
+		// File logbackFile = new File("config", "logback.xml");
+		// System.setProperty("logback.configurationFile", logbackFile.getAbsolutePath());
+		// System.setProperty(LoggerFactory.LOGGER_DELEGATE_FACTORY_CLASS_NAME, SLF4JLogDelegateFactory.class.getName());
+		log = LoggerFactory.getLogger(Runner.class);
 	}
 
 	private static void setupNettyJNI() {

@@ -214,11 +214,14 @@ public final class Native {
         ClassLoader cl = PlatformDependent.getClassLoader(Native.class);
         try {
             NativeLibraryLoader.load(sharedLibName, cl);
+            logger.info("Native lib loaded {}", sharedLibName);
         } catch (UnsatisfiedLinkError e1) {
+            logger.info("Native lib loaded failed to load via shared name {}. Using fallback.", sharedLibName, e1);
             try {
                 NativeLibraryLoader.load(staticLibName, cl);
-                logger.error("Failed to load {}", sharedLibName, e1);
+                logger.info("Native lib loaded via static name {}", staticLibName);
             } catch (UnsatisfiedLinkError e2) {
+                logger.error("Failed to load {}", sharedLibName, e2);
                 ThrowableUtil.addSuppressed(e1, e2);
                 throw e1;
             }

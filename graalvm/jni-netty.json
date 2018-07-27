@@ -13,6 +13,24 @@
       { "name": "newPipe" }
     ]
   },
+  { 
+    "name": "io.netty.channel.unix.ErrorsStaticallyReferencedJniMethods",
+    "methods": [
+      { "name": "errnoENOENT" },
+      { "name": "errnoEBADF" },
+      { "name": "errnoEPIPE" },
+      { "name": "errnoECONNRESET" },
+      { "name": "errnoENOTCONN" },
+      { "name": "errnoEAGAIN" },
+      { "name": "errnoEWOULDBLOCK" },
+      { "name": "errnoEINPROGRESS" },
+      { "name": "errorECONNREFUSED" },
+      { "name": "errorEISCONN" },
+      { "name": "errorEALREADY" },
+      { "name": "errorENETUNREACH" },
+      { "name": "strError", "parameterTypes": ["int"] }
+    ]
+  },
   {
     "name": "io.netty.channel.epoll.Native",
     "methods": [
