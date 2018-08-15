@@ -17,4 +17,6 @@ $GRAALVMDIR/bin/native-image \
  -Dfile.encoding=UTF-8 \
  -jar target/vertx-graalvm-native-image-test-0.0.1-SNAPSHOT.jar
  
+rm docker/app
+cp vertx-graalvm-native-image-test-0.0.1-SNAPSHOT docker/app
 

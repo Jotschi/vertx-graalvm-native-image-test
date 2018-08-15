@@ -2,6 +2,7 @@
 .project
 .settings
 target
+docker/app
 
 dependency-reduced-pom.xml
 vertx-graalvm-native-image-test-0.0.1-SNAPSHOT
