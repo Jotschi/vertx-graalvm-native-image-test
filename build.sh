@@ -1,13 +1,18 @@
   #!/bin/bash
 
-GRAALVMDIR=/opt/jvm/graalvm
+if [ -z "$GRAALVM_HOME" ] ; then
+  echo "Please set GRAALVM_HOME to point to your graalvm installation"
+  exit
+fi
+
 PROJECT_DIR="`dirname \"$0\"`"
+
 
 cd $PROJECT_DIR
 ./mvnw clean package
 
 rm vertx-graal*
-$GRAALVMDIR/bin/native-image \
+$GRAALVM_HOME/bin/native-image \
  --verbose \
  --no-server \
  -Dio.netty.noUnsafe=true  \
