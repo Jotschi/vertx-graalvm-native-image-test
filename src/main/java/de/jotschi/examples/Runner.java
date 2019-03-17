@@ -23,12 +23,12 @@ public class Runner {
 		Router router = Router.router(vertx);
 
 		router.route("/hello").handler(rc -> {
-			log.info("Got hello request");
+			//log.info("Got hello request");
 			rc.response().end("World");
 		});
 
 		vertx.createHttpServer()
-			.requestHandler(router::accept)
+			.requestHandler(router::handle)
 			.listen(8080);
 
 	}
