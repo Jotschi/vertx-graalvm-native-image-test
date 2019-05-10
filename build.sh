@@ -16,6 +16,7 @@ $GRAALVM_HOME/bin/native-image \
  --verbose \
  --no-server \
  --allow-incomplete-classpath \
+ -H:+ReportExceptionStackTraces \
  -Dio.netty.noUnsafe=true \
  -H:Name=hello-world \
  --initialize-at-build-time=ch.qos.logback \

@@ -1,50 +1,12 @@
 [
   {
-    "name":"ch.qos.logback.classic.Level",
-    "methods":[{"name":"valueOf","parameterTypes":["java.lang.String"] }]
+    "name":"io.netty.bootstrap.ServerChannelInitializer",
+    "methods":[
+      {"name":"channelRegistered","parameterTypes":["io.netty.channel.ChannelHandlerContext"] }
+    ]
   },
   {
-    "name":"ch.qos.logback.classic.encoder.PatternLayoutEncoder",
-    "methods":[{"name":"<init>","parameterTypes":[] }]
-  },
-  {
-    "name":"ch.qos.logback.classic.filter.LevelFilter",
-    "methods":[{"name":"<init>","parameterTypes":[] }]
-  },
-  {
-    "name":"ch.qos.logback.classic.pattern.DateConverter",
-    "methods":[{"name":"<init>","parameterTypes":[] }]
-  },
-  {
-    "name":"ch.qos.logback.classic.pattern.LevelConverter",
-    "methods":[{"name":"<init>","parameterTypes":[] }]
-  },
-  {
-    "name":"ch.qos.logback.classic.pattern.LineSeparatorConverter",
-    "methods":[{"name":"<init>","parameterTypes":[] }]
-  },
-  {
-    "name":"ch.qos.logback.classic.pattern.MessageConverter",
-    "methods":[{"name":"<init>","parameterTypes":[] }]
-  },
-  {
-    "name":"ch.qos.logback.classic.pattern.ThreadConverter",
-    "methods":[{"name":"<init>","parameterTypes":[] }]
-  },
-  {
-    "name":"ch.qos.logback.core.ConsoleAppender",
-    "methods":[{"name":"<init>","parameterTypes":[] }]
-  },
-  {
-    "name":"ch.qos.logback.core.spi.FilterReply",
-    "methods":[{"name":"valueOf","parameterTypes":["java.lang.String"] }]
-  },
-  {
-    "name":"ch.qos.logback.core.status.NopStatusListener",
-    "methods":[{"name":"<init>","parameterTypes":[] }]
-  },
-  {
-    "name":"io.netty.bootstrap.ServerBootstrap$ServerBootstrapAcceptor",
+    "name":"io.netty.bootstrap.ServerChannelInitializer$ServerBootstrapAcceptor",
     "methods":[
       {"name":"channelRead","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Object"] }, 
       {"name":"exceptionCaught","parameterTypes":["io.netty.channel.ChannelHandlerContext","java.lang.Throwable"] }
