@@ -1,0 +1,18 @@
+			<plugin>
+				<groupId>com.oracle.substratevm</groupId>
+				<artifactId>native-image-maven-plugin</artifactId>
+				<version>1.0.0-rc16</version>
+				<configuration>
+					<mainClass>${mainClass}</mainClass>
+					<imageName>vertx-native-image</imageName>
+					<buildArgs>--enable-all-security-services -H:+ReportUnsupportedElementsAtRuntime -H:+PrintClassInitialization --intialize-at-build-time -H:+ReportExceptionStackTraces --allow-incomplete-classpath</buildArgs>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>native-image</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+				</executions>
+			</plugin>
