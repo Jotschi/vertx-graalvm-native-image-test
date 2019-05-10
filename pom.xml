@@ -128,13 +128,8 @@
 			<groupId>com.oracle.substratevm</groupId>
 			<artifactId>svm</artifactId>
 			<version>${graal.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle.substratevm</groupId>
-			<artifactId>svm-driver</artifactId>
-			<version>${graal.version}</version>
-			<scope>provided</scope>
+			<scope>system</scope>
+			<systemPath>${basedir}/svm.jar</systemPath>
 		</dependency>
 		<!-- Add tcnative to avoid error during native image generation: Caused 
 			by: java.lang.NoClassDefFoundError: io/netty/handler/ssl/ReferenceCountedOpenSslServerContext$OpenSslSniHostnameMatcher -->

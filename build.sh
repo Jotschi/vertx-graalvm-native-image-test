@@ -13,6 +13,7 @@ cd $PROJECT_DIR
 
 # -H:+PrintClassInitialization \
 # -H:ReflectionConfigurationFiles=./reflectconfigs/netty.json \
+# --initialize-at-build-time=de.jotschi.examples.Runner \
 rm vertx-graal*
 $GRAALVM_HOME/bin/native-image \
  --verbose \
@@ -24,8 +25,11 @@ $GRAALVM_HOME/bin/native-image \
  --delay-class-initialization-to-runtime=io.netty.handler.codec.http.HttpObjectEncoder \
  --delay-class-initialization-to-runtime=io.netty.handler.codec.http.websocketx.WebSocket00FrameEncoder \
  --rerun-class-initialization-at-runtime=io.netty.handler.codec.http2.Http2CodecUtil \
- --initialize-at-build-time=de.jotschi.examples.Runner \
+ --rerun-class-initialization-at-runtime=io.netty.channel.DefaultChannelPipeline\$TailContext \
+ --rerun-class-initialization-at-runtime=io.netty.channel.DefaultChannelPipeline \
  --initialize-at-build-time=io.netty.util.CharsetUtil \
+ --initialize-at-build-time=io.netty.util.internal.UnpaddedInternalThreadLocalMap \
+ --initialize-at-build-time=io.netty.util.concurrent.FastThreadLocal \
  --initialize-at-build-time=io.netty.buffer.UnpooledUnsafeNoCleanerDirectByteBuf \
  --initialize-at-build-time=io.netty.buffer.UnsafeByteBufUtil \
  --initialize-at-build-time=io.netty.buffer.UnpooledByteBufAllocator\$InstrumentedUnpooledUnsafeNoCleanerDirectByteBuf \
